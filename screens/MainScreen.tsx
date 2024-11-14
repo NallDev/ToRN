@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { View, FlatList, Text, TouchableOpacity } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { loadTodos, deleteTodo } from "@/redux/slice/todoSlice";
 import { RootState, AppDispatch } from "../redux/store";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import Header from "../components/Header";
 import TodoItem from "../components/TodoItem";
+import AddTodoButton from "../components/AddTodoButton";
 
 type MainScreenProps = NativeStackScreenProps<any, "Main">;
 
@@ -21,14 +23,12 @@ export default function MainScreen({ navigation }: MainScreenProps) {
   };
 
   return (
-    <View className="flex-1 bg-gray-100 p-4">
-      <Text className="text-2xl font-bold text-center text-blue-600 mb-4">
-        To-Do List
-      </Text>
+    <View style={styles.container}>
+      <Header />
       <FlatList
         data={todos}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        contentContainerStyle={styles.listContainer}
         renderItem={({ item }) => (
           <TodoItem
             todo={item}
@@ -37,12 +37,17 @@ export default function MainScreen({ navigation }: MainScreenProps) {
           />
         )}
       />
-      <TouchableOpacity
-        onPress={() => navigation.navigate("TodoForm")}
-        className="absolute bottom-8 right-8 bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-      >
-        <Text className="text-white text-2xl">Tambah</Text>
-      </TouchableOpacity>
+      <AddTodoButton onPress={() => navigation.navigate("TodoForm")} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F2F2F2",
+  },
+  listContainer: {
+    padding: 16,
+  },
+});
