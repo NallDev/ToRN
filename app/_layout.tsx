@@ -37,12 +37,12 @@ export default function RootLayout() {
         <Stack.Screen
           name="Main"
           component={MainScreen}
-          options={{ title: "To-Do List" }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="TodoForm"
           component={TodoFormScreen}
-          options={{ title: "Add / Edit Todo" }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </Provider>
